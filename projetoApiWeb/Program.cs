@@ -5,8 +5,11 @@ using DbServices.Services;
 using TablesDto.Table;
 using Tables.Table;
 
+// Enviroments
 Env.Load();
 string db_connection_string = Environment.GetEnvironmentVariable("DATABASE_STRING_CONNECTION") ?? throw new InvalidOperationException("Varíavel de ambiente não encontrada!");
+string endpoit_carros = Environment.GetEnvironmentVariable("ENDPOIN_API_Carros") ?? "/carros";
+string endpoit_fabricantes = Environment.GetEnvironmentVariable("ENDPOIN_API_Fabricantes") ?? "/fabricantes";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,9 +45,9 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/", () => "Hello World!");
 
 // CarrosMap
-var carrosMap = app.MapGroup("/api/service/carros").WithTags("Carros");
+var carrosMap = app.MapGroup(endpoit_carros).WithTags("Carros");
 // GETS
-carrosMap.MapGet("/", async (CarrosServices services) => await services.GetAllAsync()).WithDescription("Lista de Carros");
+carrosMap.MapGet("/", async (CarrosServices services) => await services.GetAllAsync());
 carrosMap.MapGet("/{Id}", async (CarrosServices services, int Id) => await services.GetByIdAsync(Id));
 // POST
 carrosMap.MapPost("/", async (CarrosServices services, CarroItemDto carro) =>
@@ -76,7 +79,7 @@ carrosMap.MapPatch("/", async (CarrosServices services, CarroItemDto carro) =>
 carrosMap.MapDelete("/{Id}", async (CarrosServices services, int Id) => await services.DeleteAsync(Id));
 
 // FabricanteMap
-var fabricanteMap = app.MapGroup("/api/services/fabricante").WithTags("Fabricantes");
+var fabricanteMap = app.MapGroup(endpoit_fabricantes).WithTags("Fabricantes");
 // GET
 fabricanteMap.MapGet("/", async (FabricanteServices services) => await services.GetAllAsync());
 // POST

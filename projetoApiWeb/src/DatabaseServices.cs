@@ -1,7 +1,5 @@
 using Database.Db;
-using TablesDto.Table;
 using BaseService.Service;
-using Microsoft.EntityFrameworkCore;
 using Tables.Table;
 
 namespace DbServices.Services;
