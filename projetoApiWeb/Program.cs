@@ -1,17 +1,21 @@
 using Microsoft.EntityFrameworkCore;
-using DotNetEnv;
+//using DotNetEnv;
 using Database.Db;
 using DbServices.Services;
 using TablesDto.Table;
 using Tables.Table;
 
 // Enviroments
-Env.Load();
+/*Env.Load();
 string db_connection_string = Environment.GetEnvironmentVariable("DATABASE_STRING_CONNECTION") ?? throw new InvalidOperationException("Varíavel de ambiente não encontrada!");
 string endpoit_carros = Environment.GetEnvironmentVariable("ENDPOIN_API_Carros") ?? "/carros";
-string endpoit_fabricantes = Environment.GetEnvironmentVariable("ENDPOIN_API_Fabricantes") ?? "/fabricantes";
+string endpoit_fabricantes = Environment.GetEnvironmentVariable("ENDPOIN_API_Fabricantes") ?? "/fabricantes";*/
 
 var builder = WebApplication.CreateBuilder(args);
+
+string db_connection_string = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Variavel não encontrada");
+string endpoit_carros = builder.Configuration["ApiSettings:CaminhoCarro"] ?? "/carro";
+string endpoit_fabricantes = builder.Configuration["ApiSettings:CaminhoFabricante"] ?? "/fabricantes";
 
 string connectionString = builder.Configuration.GetConnectionString("lojaDeCarros") ?? db_connection_string;
 
@@ -23,7 +27,7 @@ builder.Services.AddOpenApiDocument(conf =>
     conf.Title = "CRUDApi Loja de Carros";
     conf.Version = "V1";
 });
-builder.Services.AddDbContext<DatabaseContext>(opt => opt.UseMySQL(connectionString));
+builder.Services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(connectionString));
 builder.Services.AddScoped<CarrosServices>();
 builder.Services.AddScoped<FabricanteServices>();
 
@@ -94,5 +98,21 @@ fabricanteMap.MapPost("/", async (FabricanteServices services, FabricanteItemDto
 });
 // DELETE
 fabricanteMap.MapDelete("/{Id}", async (FabricanteServices services, int Id) => await services.DeleteAsync(Id));
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<DatabaseContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Ocorreu um erro ao criar o banco de dados");
+    }
+}
 
 app.Run();
