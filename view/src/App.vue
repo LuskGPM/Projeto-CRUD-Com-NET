@@ -4,5 +4,4 @@
   <h1>Meu site</h1>
   <p> Primeiro paragrafo </p>
 </template>
-<style scoped>
-</style>
+<style scoped></style>
