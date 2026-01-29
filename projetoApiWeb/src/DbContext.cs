@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Tables.Table;
+using Tables.Models;
 
-namespace Database.Db;
+namespace Database.service;
 public class DatabaseContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<Carro> Carros { get; set; }

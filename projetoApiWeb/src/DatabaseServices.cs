@@ -1,8 +1,8 @@
-using Database.Db;
+using Database.service;
 using BaseService.Service;
-using Tables.Table;
+using Tables.Models;
 
-namespace DbServices.Services;
+namespace DbServices.service;
 
 public class FabricanteServices(DatabaseContext db) : BaseService<Fabricante>(db)
 {

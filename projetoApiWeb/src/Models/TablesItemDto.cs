@@ -1,6 +1,6 @@
-using Tables.Table;
+using Tables.Models;
 
-namespace TablesDto.Table;
+namespace TablesDto.Models;
 
 public class CarroItemDto
 {

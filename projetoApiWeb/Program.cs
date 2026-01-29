@@ -1,23 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-//using DotNetEnv;
-using Database.Db;
-using DbServices.Services;
-using TablesDto.Table;
-using Tables.Table;
-
-// Enviroments
-/*Env.Load();
-string db_connection_string = Environment.GetEnvironmentVariable("DATABASE_STRING_CONNECTION") ?? throw new InvalidOperationException("Varíavel de ambiente não encontrada!");
-string endpoit_carros = Environment.GetEnvironmentVariable("ENDPOIN_API_Carros") ?? "/carros";
-string endpoit_fabricantes = Environment.GetEnvironmentVariable("ENDPOIN_API_Fabricantes") ?? "/fabricantes";*/
+using Database.service;
+using DbServices.service;
+using projetoApiWeb.src.Controller;
+using projetoApiWeb.src.extension;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string db_connection_string = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Variavel não encontrada");
-string endpoit_carros = builder.Configuration["ApiSettings:CaminhoCarro"] ?? "/carro";
-string endpoit_fabricantes = builder.Configuration["ApiSettings:CaminhoFabricante"] ?? "/fabricantes";
-
-string connectionString = builder.Configuration.GetConnectionString("lojaDeCarros") ?? db_connection_string;
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Variável não encontrada");
 
 // Builder services
 builder.Services.AddEndpointsApiExplorer();
@@ -30,6 +19,7 @@ builder.Services.AddOpenApiDocument(conf =>
 builder.Services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(connectionString));
 builder.Services.AddScoped<CarrosServices>();
 builder.Services.AddScoped<FabricanteServices>();
+builder.ApplyCorsPolitic();
 
 // AppMap
 var app = builder.Build();
@@ -48,71 +38,12 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/", () => "Hello World!");
 
-// CarrosMap
-var carrosMap = app.MapGroup(endpoit_carros).WithTags("Carros");
-// GETS
-carrosMap.MapGet("/", async (CarrosServices services) => await services.GetAllAsync());
-carrosMap.MapGet("/{Id}", async (CarrosServices services, int Id) => await services.GetByIdAsync(Id));
-// POST
-carrosMap.MapPost("/", async (CarrosServices services, CarroItemDto carro) =>
-{
-    var newCarro = new Carro
-    {
-        Ano = carro.Ano,
-        Cor = carro.Cor,
-        FabricanteId = carro.FabricanteId,
-        Id = carro.Id,
-        Modelo = carro.Modelo
-    };
-    return await services.CreateAsync(newCarro);
-});
-// UPDATE
-carrosMap.MapPatch("/", async (CarrosServices services, CarroItemDto carro) =>
-{
-    var newCarro = new Carro
-    {
-        Ano = carro.Ano,
-        Cor = carro.Cor,
-        FabricanteId = carro.FabricanteId,
-        Id = carro.Id,
-        Modelo = carro.Modelo
-    };
-    return await services.UpdateAsync(newCarro);
-});
-// DELETE
-carrosMap.MapDelete("/{Id}", async (CarrosServices services, int Id) => await services.DeleteAsync(Id));
+// Register Endpoints
+app.UseCors("MinhaAppVue");
+app.MapCarrosEndpoints();
+app.MapFabricantesEndpoints();
 
-// FabricanteMap
-var fabricanteMap = app.MapGroup(endpoit_fabricantes).WithTags("Fabricantes");
-// GET
-fabricanteMap.MapGet("/", async (FabricanteServices services) => await services.GetAllAsync());
-// POST
-fabricanteMap.MapPost("/", async (FabricanteServices services, FabricanteItemDto fabricante) =>
-{
-    var newFabricante = new Fabricante
-    {
-        Id = fabricante.Id,
-        Name = fabricante.Name
-    };
-    return await services.CreateAsync(newFabricante);
-});
-// DELETE
-fabricanteMap.MapDelete("/{Id}", async (FabricanteServices services, int Id) => await services.DeleteAsync(Id));
-
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<DatabaseContext>();
-        context.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Ocorreu um erro ao criar o banco de dados");
-    }
-}
+// Migration
+app.ApplyMigration();
 
 app.Run();

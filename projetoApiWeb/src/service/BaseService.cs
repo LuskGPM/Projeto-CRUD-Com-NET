@@ -1,4 +1,4 @@
-using Database.Db;
+using Database.service;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaseService.Service;
