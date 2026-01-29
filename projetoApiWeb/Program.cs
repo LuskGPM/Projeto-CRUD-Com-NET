@@ -1,21 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-//using DotNetEnv;
-using Database.Db;
-using DbServices.Services;
-using TablesDto.Table;
-using Tables.Table;
-
-// Enviroments
-/*Env.Load();
-string db_connection_string = Environment.GetEnvironmentVariable("DATABASE_STRING_CONNECTION") ?? throw new InvalidOperationException("Varíavel de ambiente não encontrada!");
-string endpoit_carros = Environment.GetEnvironmentVariable("ENDPOIN_API_Carros") ?? "/carros";
-string endpoit_fabricantes = Environment.GetEnvironmentVariable("ENDPOIN_API_Fabricantes") ?? "/fabricantes";*/
+using Database.service;
+using DbServices.service;
+using TablesDto.Models;
+using Tables.Models;
+using projetoApiWeb.src.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 string db_connection_string = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Variavel não encontrada");
-string endpoit_carros = builder.Configuration["ApiSettings:CaminhoCarro"] ?? "/carro";
-string endpoit_fabricantes = builder.Configuration["ApiSettings:CaminhoFabricante"] ?? "/fabricantes";
+string endpoit_fabricantes = builder.Configuration["ApiSettings:CaminhoFabricante"] ?? "/fabricante";
 
 string connectionString = builder.Configuration.GetConnectionString("lojaDeCarros") ?? db_connection_string;
 
@@ -30,6 +23,9 @@ builder.Services.AddOpenApiDocument(conf =>
 builder.Services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(connectionString));
 builder.Services.AddScoped<CarrosServices>();
 builder.Services.AddScoped<FabricanteServices>();
+builder.Services.Configure<ApiSettings>(
+    builder.Configuration.GetSection("ApiSettings")
+);
 
 // AppMap
 var app = builder.Build();

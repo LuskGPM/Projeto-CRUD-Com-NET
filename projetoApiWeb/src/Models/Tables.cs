@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Tables.Table;
+namespace Tables.Models;
 
 public class Carro
 {
