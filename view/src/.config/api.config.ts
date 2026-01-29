@@ -1,23 +1,25 @@
+import urlApi from "./app.config.json"
+
 export const API_CONFIG = {
-    baseURL: "https://localhost:7140/api/services/",
+    baseURL: urlApi.BaseUrlApi,
     endpoints: {
         gets: {
             carro: {
-                all: "/carro",
-                byId: (id: number) => `/carro/${id}`
+                all: urlApi.BaseEndpoints.Carro,
+                byId: (id: number) => `${urlApi.BaseEndpoints.Carro}/${id}`
             },
             fabricantes: {
-                all: "/fabricantes",
-                byId: (id: number) => `/fabricantes/${id}`
+                all: urlApi.BaseEndpoints.Fabricante,
+                byId: (id: number) => `${urlApi.BaseEndpoints.Fabricante}/${id}`
             }
         },
         post: {
-            carro: "/carro",
-            fabricantes: "/fabricantes"
+            carro: urlApi.BaseEndpoints.Carro,
+            fabricantes: urlApi.BaseEndpoints.Fabricante
         },
         del: {
-            carro: (id: number) =>  `/carro/${id}`,
-            fabricantes: (id: number) =>  `/fabricantes/${id}`
+            carro: (id: number) =>  `${urlApi.BaseEndpoints.Carro}/${id}`,
+            fabricantes: (id: number) =>  `${urlApi.BaseEndpoints.Fabricante}/${id}`
         },
         update: "/carro"
     }

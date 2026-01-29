@@ -15,7 +15,7 @@ export const useCacheStore = defineStore('cache', {
     },
 
     getters: {
-        getFabricante: (state): FabricanteItemDto[] => [...state.fabricantes],
+        getFabricantes: (state): FabricanteItemDto[] => [...state.fabricantes],
 
         // Pega 20 items do array state.carros baseado no state.page atual
         paginetedCarros: (state): CarroItemDto[] => {
