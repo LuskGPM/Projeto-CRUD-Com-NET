@@ -19,6 +19,7 @@ builder.Services.AddOpenApiDocument(conf =>
 builder.Services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(connectionString));
 builder.Services.AddScoped<CarrosServices>();
 builder.Services.AddScoped<FabricanteServices>();
+builder.ApplyCorsPolitic();
 
 // AppMap
 var app = builder.Build();
@@ -38,6 +39,7 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/", () => "Hello World!");
 
 // Register Endpoints
+app.UseCors("MinhaAppVue");
 app.MapCarrosEndpoints();
 app.MapFabricantesEndpoints();
 
