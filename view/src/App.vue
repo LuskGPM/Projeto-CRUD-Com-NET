@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useCacheStore } from './stores/cache';
+import StructureBody from './components/StructureBody.vue';
+import { BApp } from 'bootstrap-vue-next';
 
 const store = useCacheStore()
 
@@ -10,10 +12,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>Meu site</h1>
-  <p> Primeiro paragrafo </p>
-  <p>
-    {{ store.getFabricantes }}
-  </p>
+  <StructureBody />
 </template>
-<style scoped></style>
+
+<style>
+</style>
