@@ -12,8 +12,19 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BButton: typeof import('bootstrap-vue-next/components/BButton')['BButton']
+    BCollapse: typeof import('bootstrap-vue-next/components/BCollapse')['BCollapse']
     BModal: typeof import('bootstrap-vue-next/components/BModal')['BModal']
+    BNavbar: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbar']
+    BNavbarBrand: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbarBrand']
+    BNavbarNav: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbarNav']
+    BNavbarToggle: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbarToggle']
+    BNavItem: typeof import('bootstrap-vue-next/components/BNav')['BNavItem']
     CompCadastroDeCarro: typeof import('./src/components/CompCadastroDeCarro.vue')['default']
+    HeaderStructure: typeof import('./src/components/templates/HeaderStructure.vue')['default']
+    MainStructure: typeof import('./src/components/templates/MainStructure.vue')['default']
     StructureBody: typeof import('./src/components/StructureBody.vue')['default']
+  }
+  export interface GlobalDirectives {
+    vBColorMode: typeof import('bootstrap-vue-next/directives/BColorMode')['vBColorMode']
   }
 }

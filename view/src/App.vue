@@ -12,7 +12,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <StructureBody />
+  <BApp>
+    <StructureBody />
+  </BApp>
 </template>
 
 <style>

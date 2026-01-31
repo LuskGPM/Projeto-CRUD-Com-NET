@@ -13,12 +13,8 @@ export default defineConfig({
     vue(),
     vueDevTools(),
     Components({
-      resolvers: [BootstrapVueNextResolver({
-        aliases: {
-          BInput: "BFormInput",
-        }
-      })],
-    }),
+      resolvers: [BootstrapVueNextResolver()]
+    })
   ],
   server: {
     port: 5173,

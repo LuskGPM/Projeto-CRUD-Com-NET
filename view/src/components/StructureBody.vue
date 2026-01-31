@@ -1,8 +1,13 @@
 <script lang="ts" setup>
-import CompCadastroDeCarro from './CompCadastroDeCarro.vue';
+import HeaderStructure from './templates/HeaderStructure.vue';
+
 
 </script>
 
 <template>
-    <CompCadastroDeCarro />
+    <header>
+        <HeaderStructure />
+    </header>
+    <main></main>
+    <footer></footer>
 </template>
