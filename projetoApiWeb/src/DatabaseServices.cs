@@ -34,7 +34,6 @@ public class CarrosServices(DatabaseContext db) : BaseService<Carro>(db)
     {
         var newEntity = new Carro
         {
-            Id = entity.Id,
             Ano = entity.Ano,
             Cor = entity.Cor,
             FabricanteId = entity.FabricanteId,

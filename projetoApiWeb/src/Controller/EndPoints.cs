@@ -30,7 +30,6 @@ public static class CarrosEndpoints
             Ano = carro.Ano,
             Cor = carro.Cor,
             FabricanteId = carro.FabricanteId,
-            Id = carro.Id,
             Modelo = carro.Modelo
         };
         return await service.CreateAsync(newCarro);
