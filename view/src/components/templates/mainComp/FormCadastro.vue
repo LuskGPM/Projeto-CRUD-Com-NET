@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { CarroItemDto, FabricanteItemDto } from '@/interfaces/schemas';
 import { useCacheStore } from '@/stores/cache';
-import { inject, ref, type Ref } from 'vue';
+import { computed, inject, ref, type ComputedRef, type Ref } from 'vue';
 
 
 const modeloCarro: Ref<string | null> = ref(null)
@@ -69,6 +69,17 @@ const insertItemCadastroComp = async (ExpectedType: "car" | "fab") => {
     }
 }
 
+const validacaoSelectFabricantes = computed(() => selectedFabricanteForm.value != null)
+const validacaoSelectCor = computed(() => selectedCorForm.value != null)
+const validacaoModeloCarro = computed(() => modeloCarro.value != null && modeloCarro.value.length >= 2)
+
+const validarFormularioCarro = computed(() => {
+    if(selectedCorForm.value && selectedFabricanteForm.value && modeloCarro.value) return false
+    return true
+})
+
+const validacaoFabricante = computed(() => nomeFabricante.value != null && nomeFabricante.value.length > 3)
+
 </script>
 
 <template>
@@ -77,17 +88,17 @@ const insertItemCadastroComp = async (ExpectedType: "car" | "fab") => {
         <BForm v-if="isGerenciamentoDeCarros">
             <BFormFloatingLabel label="Modelo do Veículo" label-for="modeloCarro" class="my-2">
                 <BFormInput id="modeloCarro" type="text" placeholder="Modelo do carro" v-model="modeloCarro"
-                    :disabled="isLoading" />
+                    :disabled="isLoading" :state="validacaoModeloCarro" />
             </BFormFloatingLabel>
 
             <BRow>
                 <BCol>
                     <BFormSelect size="md" v-model="selectedCorForm" :options="optionsCor" class="mt-3"
-                        :disabled="isLoading" />
+                        :disabled="isLoading" :state="validacaoSelectCor" />
                 </BCol>
                 <BCol>
                     <BFormSelect size="md" v-model="selectedFabricanteForm" :options="optionFabricantes" class="mt-3"
-                        :disabled="isLoading">
+                        :disabled="isLoading" :state="validacaoSelectFabricantes">
                         <BFormSelectOption v-for="fabricante in store.getFabricantes" :key="fabricante.id!"
                             :value="fabricante.id">
                             {{ fabricante.name }}
@@ -99,20 +110,21 @@ const insertItemCadastroComp = async (ExpectedType: "car" | "fab") => {
             <label for="anoVeiculo" class="mt-3">Ano do veículo</label>
             <BFormSpinbutton size="lg" id="anoVeiculo" v-model="anoButtonValue" min="1886" :max="anoAtual" class="mb-3"
                 :disabled="isLoading" />
+
             <BButton size="lg" type="button" variant="outline-light" @click="insertItemCadastroComp('car')"
-                :disabled="isLoading">
-                Adicionar
-                <BSpinner v-if="isLoading" />
+                :disabled="validarFormularioCarro || isLoading">
+                <span>{{ isLoading ? "loading..." : "Adicionar" }}</span>
+                <BSpinner v-if="isLoading" small />
             </BButton>
         </BForm>
 
         <BForm v-else>
             <BFormFloatingLabel label="Nome do Fabricante" label-for="nomeFabricante" class="mb-3">
-                <BFormInput type="text" id="nomeFabricante" placeholder="nomeFabricante" v-model="nomeFabricante" />
+                <BFormInput type="text" id="nomeFabricante" placeholder="nomeFabricante" v-model="nomeFabricante" :state="validacaoFabricante" />
             </BFormFloatingLabel>
-            <BButton size="lg" type="button" variant="outline-light" @click="insertItemCadastroComp('fab')">
-                Adicionar
-                <BSpinner v-if="isLoading" />
+            <BButton size="lg" type="button" variant="outline-light" @click="insertItemCadastroComp('fab')" class="d-flex align-items-center justify-content-between" :disabled="isLoading || validacaoFabricante">
+                <span>{{ isLoading ? "loading..." : "Adicionar" }}</span>
+                <BSpinner v-if="isLoading" small/>
             </BButton>
         </BForm>
     </BCard>
