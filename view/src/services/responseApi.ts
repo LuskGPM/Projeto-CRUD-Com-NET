@@ -1,5 +1,5 @@
 
-import type { Carro_Or_Fabricante, CarroItemDto, FabricanteItemDto } from "@/interfaces/schemas"
+import type { CarroItemDto, FabricanteItemDto } from "@/interfaces/schemas"
 import { API_CONFIG } from "@/.config/api.config";
 import type { AxiosInstance, HttpStatusCode } from "axios";
 import api_instance from "./api"
@@ -19,7 +19,7 @@ class ApiResponseService {
 
     // GetById somente utilizado em casos extremamente específicos
     // Recomendado fazer a busca individual na memória do Pinia
-    public async GetByIdAsync(ExpectedType: "car" | "fab", Id: number): Promise<Carro_Or_Fabricante> {
+    public async GetByIdAsync(ExpectedType: "car" | "fab", Id: number): Promise<CarroItemDto | FabricanteItemDto> {
         switch (ExpectedType) {
             case "car":
                 return await this.api(API_CONFIG.endpoints.gets.carro.byId(Id))
@@ -28,7 +28,7 @@ class ApiResponseService {
         }
     }
 
-    public async PostAsync(ExpectedType: "car" | "fab", Object: Carro_Or_Fabricante): Promise<Carro_Or_Fabricante> {
+    public async PostAsync(ExpectedType: "car" | "fab", Object: CarroItemDto | FabricanteItemDto): Promise<CarroItemDto | FabricanteItemDto> {
         switch (ExpectedType) {
             case "car":
                 return await this.api.post(API_CONFIG.endpoints.post.carro, Object)

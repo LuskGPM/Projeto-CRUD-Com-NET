@@ -27,5 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    background-color: rgb(234, 234, 234);
 }
 </style>

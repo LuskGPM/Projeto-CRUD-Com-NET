@@ -11,5 +11,3 @@ export interface FabricanteItemDto {
     name: string;
 }
 
-export type Carro_Or_Fabricante = CarroItemDto | FabricanteItemDto;
-

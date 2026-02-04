@@ -38,7 +38,7 @@ export const useCacheStore = defineStore('cache', {
     actions: {
         setPage(page: number) {
             if (page > 0 && page <= this.totalPages)
-            this.page = page;
+                this.page = page;
         },
         async loadCache() {
             try {
@@ -47,10 +47,19 @@ export const useCacheStore = defineStore('cache', {
 
                 if (this.fabricantes.length === 0)
                     this.fabricantes = await ResponseInstance.GetAllAsync("fab") as FabricanteItemDto[]
-            } catch (error: any) { this.erroString = error.message?? `Erro: ${error}` }
+            } catch (error: any) { this.erroString = error.message ?? `Erro: ${error}` }
         },
-        async InsertItem() {
+        async InsertItem(ExpectedType: "car" | "fab", newObject: CarroItemDto | FabricanteItemDto) {
+            const response = await ResponseInstance.PostAsync(ExpectedType, newObject)
 
+            if (ExpectedType == "car") this.carros.unshift(response as CarroItemDto)
+            else this.fabricantes.unshift(response as FabricanteItemDto)
+        },
+        async DeleteItem(ExpectedType: "car" | "fab", Id: number) {
+            await ResponseInstance.DeleteAsync(ExpectedType, Id)
+
+            if (ExpectedType == "car") this.carros = [...this.carros].filter(carro => carro.id !== Id)
+            else this.fabricantes = this.fabricantes = [...this.fabricantes].filter(fabricante => fabricante.id !== Id)
         }
     }
 })
