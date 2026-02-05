@@ -1,26 +1,24 @@
-import urlApi from "./app.config.json"
-
 export const API_CONFIG = {
-    baseURL: urlApi.BaseUrlApi,
+    baseURL: import.meta.env.VITE_BASE_URL_API, 
     endpoints: {
         gets: {
             carro: {
-                all: urlApi.BaseEndpoints.Carro,
-                byId: (id: number) => `${urlApi.BaseEndpoints.Carro}/${id}`
+                all: import.meta.env.VITE_ENDPOINT_CARRO,
+                byId: (id: number) => `${import.meta.env.VITE_ENDPOINT_CARRO}/${id}`
             },
             fabricantes: {
-                all: urlApi.BaseEndpoints.Fabricante,
-                byId: (id: number) => `${urlApi.BaseEndpoints.Fabricante}/${id}`
+                all: import.meta.env.VITE_ENDPOINT_FABRICANTE,
+                byId: (id: number) => `${import.meta.env.VITE_ENDPOINT_FABRICANTE}/${id}`
             }
         },
         post: {
-            carro: urlApi.BaseEndpoints.Carro,
-            fabricantes: urlApi.BaseEndpoints.Fabricante
+            carro: import.meta.env.VITE_ENDPOINT_CARRO,
+            fabricantes: import.meta.env.VITE_ENDPOINT_FABRICANTE
         },
         del: {
-            carro: (id: number) =>  `${urlApi.BaseEndpoints.Carro}/${id}`,
-            fabricantes: (id: number) =>  `${urlApi.BaseEndpoints.Fabricante}/${id}`
+            carro: (id: number) => `${import.meta.env.VITE_ENDPOINT_CARRO}/${id}`,
+            fabricantes: (id: number) => `${import.meta.env.VITE_ENDPOINT_FABRICANTE}/${id}`
         },
-        update: urlApi.BaseEndpoints.Carro
+        update: import.meta.env.VITE_ENDPOINT_CARRO
     }
 }
