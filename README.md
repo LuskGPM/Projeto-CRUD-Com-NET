@@ -285,9 +285,7 @@ src/
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | `GET` | `/api/fabricantes` | Listar todos os fabricantes |
-| `GET` | `/api/fabricantes/{id}` | Obter fabricante por ID |
 | `POST` | `/api/fabricantes` | Criar novo fabricante |
-| `PATCH` | `/api/fabricantes` | Atualizar fabricante |
 | `DELETE` | `/api/fabricantes/{id}` | Deletar fabricante |
 
 ### Exemplo de Payload - Criar Carro
