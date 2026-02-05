@@ -21,6 +21,6 @@ export const API_CONFIG = {
             carro: (id: number) =>  `${urlApi.BaseEndpoints.Carro}/${id}`,
             fabricantes: (id: number) =>  `${urlApi.BaseEndpoints.Fabricante}/${id}`
         },
-        update: "/carro"
+        update: urlApi.BaseEndpoints.Carro
     }
 }

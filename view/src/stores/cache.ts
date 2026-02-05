@@ -60,6 +60,12 @@ export const useCacheStore = defineStore('cache', {
 
             if (ExpectedType == "car") this.carros = [...this.carros].filter(carro => carro.id !== Id)
             else this.fabricantes = this.fabricantes = [...this.fabricantes].filter(fabricante => fabricante.id !== Id)
+        },
+        async UpdateCarro(CarroToEdit: CarroItemDto) {
+            const response = await ResponseInstance.PatchCarAsync(CarroToEdit)
+
+            const index = this.carros.findIndex(carro => carro.id == response.id)
+            if (index !== -1) this.carros[index] = response
         }
     }
 })

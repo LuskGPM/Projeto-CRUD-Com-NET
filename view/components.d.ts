@@ -34,6 +34,7 @@ declare module 'vue' {
     BNavItem: typeof import('bootstrap-vue-next/components/BNav')['BNavItem']
     BRow: typeof import('bootstrap-vue-next/components/BContainer')['BRow']
     BSpinner: typeof import('bootstrap-vue-next/components/BSpinner')['BSpinner']
+    FooterStructure: typeof import('./src/components/templates/FooterStructure.vue')['default']
     FormCadastro: typeof import('./src/components/templates/mainComp/FormCadastro.vue')['default']
     HeaderStructure: typeof import('./src/components/templates/HeaderStructure.vue')['default']
     ListItems: typeof import('./src/components/templates/mainComp/ListItems.vue')['default']

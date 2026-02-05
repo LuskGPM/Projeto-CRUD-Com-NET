@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import FooterStructure from './templates/FooterStructure.vue';
 import HeaderStructure from './templates/HeaderStructure.vue';
 import MainStructure from './templates/MainStructure.vue';
 
@@ -15,7 +16,7 @@ import MainStructure from './templates/MainStructure.vue';
             <MainStructure />
         </main>
         <footer>
-
+            <FooterStructure />
         </footer>
     </body>
 </template>
@@ -29,5 +30,9 @@ body {
     justify-content: space-between;
 
     background-color: rgb(234, 234, 234);
+}
+
+html, body {
+    overflow-x: clip;
 }
 </style>
