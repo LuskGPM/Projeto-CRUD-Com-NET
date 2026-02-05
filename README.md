@@ -10,6 +10,7 @@ Uma aplicação web full-stack moderna para gerenciamento de inventário de carr
 - [Arquitetura do Projeto](#arquitetura-do-projeto)
 - [Tecnologias](#tecnologias)
 - [Pré-requisitos](#pré-requisitos)
+- [Screenshots](#screenshots)
 - [Instalação e Configuração](#instalação-e-configuração)
 - [Estrutura de Diretórios](#estrutura-de-diretórios)
 - [Funcionalidades](#funcionalidades)
@@ -119,6 +120,16 @@ dotnet --version    # 10.0 ou superior
 ```
 
 ---
+
+## 📱 Screenshots
+
+### Gerenciador de Carros
+![Carros](screenshots/screen-2.png)
+*Formulário de cadastro com validações em tempo real*
+
+### Gerenciador Fabricantes
+![Fabricantes](screenshots/screen-1.png)
+*Formulário de cadastro com validações em tempo real*
 
 ## 🚀 Instalação e Configuração
 
