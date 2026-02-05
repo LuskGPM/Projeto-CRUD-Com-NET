@@ -8,7 +8,7 @@ public static class DbCorsPolitic
         {
             options.AddPolicy("MinhaAppVue", policy =>
             {
-                policy.WithOrigins("http://localhost:5173")
+                policy.WithOrigins("http://localhost:5173", "https://projeto-crud-com-net.vercel.app")
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });
