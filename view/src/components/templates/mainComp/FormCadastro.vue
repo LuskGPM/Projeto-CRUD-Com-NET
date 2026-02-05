@@ -122,7 +122,8 @@ const validacaoFabricante = computed(() => nomeFabricante.value != null && nomeF
             <BFormFloatingLabel label="Nome do Fabricante" label-for="nomeFabricante" class="mb-3">
                 <BFormInput type="text" id="nomeFabricante" placeholder="nomeFabricante" v-model="nomeFabricante" :state="validacaoFabricante" />
             </BFormFloatingLabel>
-            <BButton size="lg" type="button" variant="outline-light" @click="insertItemCadastroComp('fab')" class="d-flex align-items-center justify-content-between" :disabled="isLoading || validacaoFabricante">
+
+            <BButton size="lg" type="button" variant="outline-light" @click="insertItemCadastroComp('fab')" class="d-flex align-items-center justify-content-between" :disabled="isLoading || !validacaoFabricante">
                 <span>{{ isLoading ? "loading..." : "Adicionar" }}</span>
                 <BSpinner v-if="isLoading" small/>
             </BButton>
